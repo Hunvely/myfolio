@@ -30,6 +30,9 @@ public class User {
     private String email;
 
     @Column(length = 50)
+    private String phoneNumber;
+
+    @Column(length = 50)
     private String name;
 
     @Column(name = "profile_image", length = 255)

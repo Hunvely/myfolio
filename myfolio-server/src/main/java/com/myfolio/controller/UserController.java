@@ -1,5 +1,7 @@
 package com.myfolio.controller;
 
+import com.myfolio.dto.UserDto.UserRequestDTO;
+import com.myfolio.dto.UserDto.UserResponseDTO;
 import com.myfolio.entity.User;
 import com.myfolio.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,23 +18,29 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        return ResponseEntity.ok(
+                userService.getAllUsers()
+                        .stream()
+                        .map(userService::toDTO)
+                        .toList()
+        );
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        return ResponseEntity.ok(userService.updateUser(id, updatedUser));
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userRequestDTO));
     }
 
     @DeleteMapping("/{id}")
