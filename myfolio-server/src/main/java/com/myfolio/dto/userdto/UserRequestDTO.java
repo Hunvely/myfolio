@@ -1,20 +1,15 @@
-package com.myfolio.dto.userDto;
+package com.myfolio.dto.userdto;
 
-import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
-@Builder
-public class UserResponseDTO {
+public class UserRequestDTO {
 
-    private Long id;
     private String username;
+    private String password;
     private String email;
     private String phoneNumber;
     private String name;
     private String profileImage;
     private String bio;
-    private LocalDateTime createdAt;
 }

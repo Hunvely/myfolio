@@ -1,7 +1,7 @@
 package com.myfolio.controller;
 
-import com.myfolio.dto.userDto.UserRequestDTO;
-import com.myfolio.dto.userDto.UserResponseDTO;
+import com.myfolio.dto.userdto.UserRequestDTO;
+import com.myfolio.dto.userdto.UserResponseDTO;
 import com.myfolio.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

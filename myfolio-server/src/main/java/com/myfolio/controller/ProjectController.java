@@ -1,7 +1,7 @@
 package com.myfolio.controller;
 
-import com.myfolio.dto.projectDto.ProjectRequestDTO;
-import com.myfolio.dto.projectDto.ProjectResponseDTO;
+import com.myfolio.dto.projectdto.ProjectRequestDTO;
+import com.myfolio.dto.projectdto.ProjectResponseDTO;
 import com.myfolio.entity.Project;
 import com.myfolio.entity.User;
 import com.myfolio.repository.UserRepository;
