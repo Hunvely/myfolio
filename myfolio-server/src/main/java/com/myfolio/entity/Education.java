@@ -1,5 +1,6 @@
 package com.myfolio.entity;
 
+import com.myfolio.enums.EducationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,10 @@ public class Education {
 
     @Column(length = 100)
     private String schoolName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EducationStatus status;
 
     @Column(length = 100)
     private String major;
