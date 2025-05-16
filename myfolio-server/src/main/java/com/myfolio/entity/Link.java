@@ -21,10 +21,18 @@ public class Link {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private String title;
+
     @Column(length = 50)
-    private String type;
+    private String urlType; // 깃허브, 블로그 등
+
+    @Column(length = 255)
+    private String iconUrl; // 깃허브 로고, 블로그 로고 등
 
     @Column(length = 255)
     private String url;
+
+    @Column(nullable = false)
+    private Boolean isVisible = true; // 공개 or 비공개
 }
 
