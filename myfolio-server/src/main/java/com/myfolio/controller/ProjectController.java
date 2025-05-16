@@ -1,6 +1,10 @@
 package com.myfolio.controller;
 
+import com.myfolio.dto.projectDto.ProjectRequestDTO;
+import com.myfolio.dto.projectDto.ProjectResponseDTO;
 import com.myfolio.entity.Project;
+import com.myfolio.entity.User;
+import com.myfolio.repository.UserRepository;
 import com.myfolio.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,24 +18,27 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        return ResponseEntity.ok(projectService.createProject(project));
+    public ResponseEntity<ProjectResponseDTO> createProject(@RequestBody ProjectRequestDTO projectRequestDTO) {
+        User user = userRepository.findById(projectRequestDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + projectRequestDTO.getUserId()));
+        return ResponseEntity.ok(projectService.createProject(projectRequestDTO, user));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@PathVariable Long id) {
+    public ResponseEntity<ProjectResponseDTO> getProject(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.getProject(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Project>> getAllProjects() {
+    public ResponseEntity<List<ProjectResponseDTO>> getAllProjects() {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project updatedProject) {
+    public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
         return ResponseEntity.ok(projectService.updateProject(id, updatedProject));
     }
 
