@@ -1,5 +1,6 @@
 package com.myfolio.entity;
 
+import com.myfolio.enums.SkillType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,14 @@ public class Skill {
     private Long id;
 
     @Column(nullable = false, length = 50, unique = true)
-    private String name;
+    private String skillName;
 
-    @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SkillType skillType; // 기술 분류 (언어, 프레임워크 등)
+
+    private String logoUrl; // 프론트에서 사용할 로고 URL (선택 사항)
+
+    @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserSkill> userSkills = new ArrayList<>();
 }
