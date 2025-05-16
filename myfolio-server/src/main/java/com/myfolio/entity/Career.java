@@ -26,6 +26,12 @@ public class Career {
     private String companyName;
 
     @Column(length = 100)
+    private String location;
+
+    @Column(length = 50)
+    private String employmentType;
+
+    @Column(length = 100)
     private String position;
 
     private LocalDate startDate;
