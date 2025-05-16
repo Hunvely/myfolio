@@ -1,7 +1,7 @@
 package com.myfolio.service;
 
-import com.myfolio.dto.UserDto.UserRequestDTO;
-import com.myfolio.dto.UserDto.UserResponseDTO;
+import com.myfolio.dto.userDto.UserRequestDTO;
+import com.myfolio.dto.userDto.UserResponseDTO;
 import com.myfolio.entity.User;
 import com.myfolio.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

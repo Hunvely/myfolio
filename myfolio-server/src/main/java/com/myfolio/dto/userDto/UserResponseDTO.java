@@ -1,4 +1,4 @@
-package com.myfolio.dto.UserDto;
+package com.myfolio.dto.userDto;
 
 import lombok.Builder;
 import lombok.Data;
