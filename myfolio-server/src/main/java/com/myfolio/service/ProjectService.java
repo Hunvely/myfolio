@@ -76,6 +76,9 @@ public class ProjectService {
     }
 
     public void deleteUser(Long id) {
+        if (!projectRepository.existsById(id)) {
+            throw new IllegalArgumentException("project not found with id: " + id);
+        }
         projectRepository.deleteById(id);
     }
 }

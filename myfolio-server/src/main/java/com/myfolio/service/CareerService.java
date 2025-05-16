@@ -6,7 +6,6 @@ import com.myfolio.entity.Career;
 import com.myfolio.entity.User;
 import com.myfolio.repository.CareerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,6 +79,9 @@ public class CareerService {
     }
 
     public void deleteCareer(Long id) {
+        if (!careerRepository.existsById(id)) {
+            throw new IllegalArgumentException("career not found with id: " + id);
+        }
         careerRepository.deleteById(id);
     }
 }

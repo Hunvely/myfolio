@@ -80,6 +80,9 @@ public class EducationService {
     }
 
     public void deleteEducation(Long id) {
+        if (!educationRepository.existsById(id)) {
+            throw new IllegalArgumentException("education not found with id: " + id);
+        }
         educationRepository.deleteById(id);
     }
 }
