@@ -1,0 +1,74 @@
+{
+  "home": {
+    "title": "创建您的专属作品集，<br />从mypolio开始。",
+    "subtitle": "设计师、开发者，任何人都能轻松制作的在线作品集",
+    "startNow": "立即开始",
+    "login": "登录",
+    "features": {
+      "design": {
+        "title": "精美设计",
+        "description": "用现代精致的模板来装饰您的作品集"
+      },
+      "speed": {
+        "title": "快速制作",
+        "description": "仅需几分钟即可完成专业的作品集"
+      },
+      "responsive": {
+        "title": "响应式设计",
+        "description": "在所有设备上都能完美显示的响应式作品集"
+      }
+    }
+  },
+  "login": {
+    "title": "登录",
+    "subtitle": "欢迎来到作品集",
+    "email": "邮箱",
+    "password": "密码",
+    "loginButton": "登录",
+    "signup": "注册",
+    "home": "首页"
+  },
+  "signup": {
+    "title": "注册",
+    "subtitle": "开始您的作品集",
+    "basicInfo": "基本信息",
+    "additionalInfo": "附加信息（可选）",
+    "username": "用户名",
+    "email": "邮箱",
+    "password": "密码",
+    "name": "姓名",
+    "phoneNumber": "电话号码",
+    "profileImage": "头像图片URL",
+    "bio": "请填写自我介绍",
+    "signupButton": "注册",
+    "login": "登录",
+    "home": "首页"
+  },
+  "dashboard": {
+    "title": "仪表板",
+    "subtitle": "管理和创建您的作品集",
+    "welcome": "欢迎！",
+    "welcomeMessage": "登录成功。现在您可以创建作品集了。",
+    "features": {
+      "create": {
+        "title": "创建作品集",
+        "description": "通过添加项目和经历来创建您专属的作品集"
+      },
+      "customize": {
+        "title": "设计定制",
+        "description": "用各种模板和颜色来装饰您的作品集"
+      },
+      "stats": {
+        "title": "查看统计",
+        "description": "查看您的作品集访问量和浏览量"
+      }
+    },
+    "logout": "退出登录",
+    "home": "首页"
+  },
+  "common": {
+    "language": "语言"
+  }
+}
+
+

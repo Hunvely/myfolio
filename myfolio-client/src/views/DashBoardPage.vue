@@ -2,8 +2,8 @@
   <div class="dashboard">
     <header class="dashboard-header">
       <div class="header-content">
-        <h1>대시보드</h1>
-        <p class="subtitle">포트폴리오를 관리하고 작성해보세요</p>
+        <h1>{{ t('dashboard.title') }}</h1>
+        <p class="subtitle">{{ t('dashboard.subtitle') }}</p>
       </div>
     </header>
     
@@ -11,32 +11,32 @@
       <div class="welcome-section">
         <div class="welcome-card">
           <div class="welcome-icon">🎉</div>
-          <h3>환영합니다!</h3>
-          <p>로그인에 성공했습니다. 이제 포트폴리오를 작성할 수 있습니다.</p>
+          <h3>{{ t('dashboard.welcome') }}</h3>
+          <p>{{ t('dashboard.welcomeMessage') }}</p>
         </div>
       </div>
       
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">📝</div>
-          <h4>포트폴리오 작성</h4>
-          <p>프로젝트와 경력을 추가하여 나만의 포트폴리오를 만들어보세요</p>
+          <h4>{{ t('dashboard.features.create.title') }}</h4>
+          <p>{{ t('dashboard.features.create.description') }}</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🎨</div>
-          <h4>디자인 커스터마이징</h4>
-          <p>다양한 템플릿과 색상으로 포트폴리오를 꾸며보세요</p>
+          <h4>{{ t('dashboard.features.customize.title') }}</h4>
+          <p>{{ t('dashboard.features.customize.description') }}</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">📊</div>
-          <h4>통계 확인</h4>
-          <p>포트폴리오 방문자 수와 조회수를 확인해보세요</p>
+          <h4>{{ t('dashboard.features.stats.title') }}</h4>
+          <p>{{ t('dashboard.features.stats.description') }}</p>
         </div>
       </div>
       
       <div class="action-buttons">
-        <button @click="logout" class="btn-outline">로그아웃</button>
-        <router-link to="/" class="btn-link">홈으로</router-link>
+        <button @click="logout" class="btn-outline">{{ t('dashboard.logout') }}</button>
+        <router-link to="/" class="btn-link">{{ t('dashboard.home') }}</router-link>
       </div>
     </div>
   </div>
@@ -44,6 +44,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const router = useRouter()
 

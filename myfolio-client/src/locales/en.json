@@ -1,0 +1,73 @@
+{
+  "home": {
+    "title": "Create your portfolio,<br />start with mypolio.",
+    "subtitle": "Online portfolio easily made by designers, developers, anyone",
+    "startNow": "Start Now",
+    "login": "Login",
+    "features": {
+      "design": {
+        "title": "Beautiful Design",
+        "description": "Decorate your portfolio with modern and sophisticated templates"
+      },
+      "speed": {
+        "title": "Fast Creation",
+        "description": "Complete a professional portfolio in just a few minutes"
+      },
+      "responsive": {
+        "title": "Responsive Design",
+        "description": "Responsive portfolio that looks perfect on all devices"
+      }
+    }
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Welcome to the portfolio",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Login",
+    "signup": "Sign Up",
+    "home": "Home"
+  },
+  "signup": {
+    "title": "Sign Up",
+    "subtitle": "Start your portfolio",
+    "basicInfo": "Basic Information",
+    "additionalInfo": "Additional Information (Optional)",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "phoneNumber": "Phone Number",
+    "profileImage": "Profile Image URL",
+    "bio": "Write your self-introduction",
+    "signupButton": "Sign Up",
+    "login": "Login",
+    "home": "Home"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Manage and create your portfolio",
+    "welcome": "Welcome!",
+    "welcomeMessage": "Login successful. You can now create your portfolio.",
+    "features": {
+      "create": {
+        "title": "Create Portfolio",
+        "description": "Create your own portfolio by adding projects and career"
+      },
+      "customize": {
+        "title": "Design Customization",
+        "description": "Decorate your portfolio with various templates and colors"
+      },
+      "stats": {
+        "title": "View Statistics",
+        "description": "Check your portfolio visitor count and views"
+      }
+    },
+    "logout": "Logout",
+    "home": "Home"
+  },
+  "common": {
+    "language": "Language"
+  }
+}
+

@@ -1,5 +1,73 @@
 {
+  "home": {
+    "title": "나만의 포트폴리오,<br />mypolio에서 시작하세요.",
+    "subtitle": "디자이너, 개발자, 누구든지 쉽게 만드는 온라인 포트폴리오",
+    "startNow": "지금 시작하기",
+    "login": "로그인",
+    "features": {
+      "design": {
+        "title": "아름다운 디자인",
+        "description": "모던하고 세련된 템플릿으로 포트폴리오를 꾸며보세요"
+      },
+      "speed": {
+        "title": "빠른 제작",
+        "description": "몇 분만에 전문적인 포트폴리오를 완성할 수 있습니다"
+      },
+      "responsive": {
+        "title": "반응형 디자인",
+        "description": "모든 기기에서 완벽하게 보이는 반응형 포트폴리오"
+      }
+    }
+  },
+  "login": {
+    "title": "로그인",
+    "subtitle": "포트폴리오에 오신 것을 환영합니다",
+    "email": "이메일",
+    "password": "비밀번호",
+    "loginButton": "로그인",
+    "signup": "회원가입",
+    "home": "홈으로"
+  },
+  "signup": {
+    "title": "회원가입",
+    "subtitle": "포트폴리오를 시작해보세요",
+    "basicInfo": "기본 정보",
+    "additionalInfo": "추가 정보 (선택사항)",
+    "username": "사용자명",
+    "email": "이메일",
+    "password": "비밀번호",
+    "name": "이름",
+    "phoneNumber": "전화번호",
+    "profileImage": "프로필 이미지 URL",
+    "bio": "자기소개를 작성해주세요",
+    "signupButton": "회원가입",
+    "login": "로그인",
+    "home": "홈으로"
+  },
+  "dashboard": {
+    "title": "대시보드",
+    "subtitle": "포트폴리오를 관리하고 작성해보세요",
     "welcome": "환영합니다!",
-    "login": "로그인"
+    "welcomeMessage": "로그인에 성공했습니다. 이제 포트폴리오를 작성할 수 있습니다.",
+    "features": {
+      "create": {
+        "title": "포트폴리오 작성",
+        "description": "프로젝트와 경력을 추가하여 나만의 포트폴리오를 만들어보세요"
+      },
+      "customize": {
+        "title": "디자인 커스터마이징",
+        "description": "다양한 템플릿과 색상으로 포트폴리오를 꾸며보세요"
+      },
+      "stats": {
+        "title": "통계 확인",
+        "description": "포트폴리오 방문자 수와 조회수를 확인해보세요"
+      }
+    },
+    "logout": "로그아웃",
+    "home": "홈으로"
+  },
+  "common": {
+    "language": "언어"
+  }
 }
   

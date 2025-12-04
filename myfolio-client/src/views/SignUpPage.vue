@@ -2,45 +2,45 @@
   <div class="signup-page">
     <div class="signup-container">
       <div class="signup-header">
-        <h2>회원가입</h2>
-        <p>포트폴리오를 시작해보세요</p>
+        <h2>{{ t('signup.title') }}</h2>
+        <p>{{ t('signup.subtitle') }}</p>
       </div>
       
       <form @submit.prevent="submit">
         <div class="form-section">
-          <h3>기본 정보</h3>
+          <h3>{{ t('signup.basicInfo') }}</h3>
           <div class="input-group">
-            <input v-model="username" type="text" placeholder="사용자명" required />
+            <input v-model="username" type="text" :placeholder="t('signup.username')" required />
           </div>
           <div class="input-group">
-            <input v-model="email" type="email" placeholder="이메일" required />
+            <input v-model="email" type="email" :placeholder="t('signup.email')" required />
           </div>
           <div class="input-group">
-            <input v-model="password" type="password" placeholder="비밀번호" required />
+            <input v-model="password" type="password" :placeholder="t('signup.password')" required />
           </div>
           <div class="input-group">
-            <input v-model="name" type="text" placeholder="이름" required />
+            <input v-model="name" type="text" :placeholder="t('signup.name')" required />
           </div>
           <div class="input-group">
-            <input v-model="phoneNumber" type="text" placeholder="전화번호" required />
+            <input v-model="phoneNumber" type="text" :placeholder="t('signup.phoneNumber')" required />
           </div>
         </div>
 
         <div class="form-section">
-          <h3>추가 정보 (선택사항)</h3>
+          <h3>{{ t('signup.additionalInfo') }}</h3>
           <div class="input-group">
-            <input v-model="profileImage" type="text" placeholder="프로필 이미지 URL" />
+            <input v-model="profileImage" type="text" :placeholder="t('signup.profileImage')" />
           </div>
           <div class="input-group">
-            <textarea v-model="bio" placeholder="자기소개를 작성해주세요"></textarea>
+            <textarea v-model="bio" :placeholder="t('signup.bio')"></textarea>
           </div>
         </div>
 
-        <button type="submit" class="signup-btn">회원가입</button>
+        <button type="submit" class="signup-btn">{{ t('signup.signupButton') }}</button>
         
         <div class="footer-links">
-          <router-link to="/login" class="link">로그인</router-link>
-          <router-link to="/" class="link">홈으로</router-link>
+          <router-link to="/login" class="link">{{ t('signup.login') }}</router-link>
+          <router-link to="/" class="link">{{ t('signup.home') }}</router-link>
         </div>
       </form>
     </div>
@@ -49,7 +49,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+
+const { t } = useI18n()
 
 const username = ref('')
 const email = ref('')
@@ -151,7 +154,7 @@ input,
 textarea {
   width: 100%;
   padding: 1rem;
-  border: 2px solid var(--border-color);
+  border: 1px solid #1a1a1a;
   border-radius: 12px;
   font-family: inherit;
   font-size: 1rem;

@@ -1,5 +1,73 @@
 {
+  "home": {
+    "title": "あなただけのポートフォリオを、<br />mypolioで始めましょう。",
+    "subtitle": "デザイナー、開発者、誰でも簡単に作れるオンラインポートフォリオ",
+    "startNow": "今すぐ始める",
+    "login": "ログイン",
+    "features": {
+      "design": {
+        "title": "美しいデザイン",
+        "description": "モダンで洗練されたテンプレートでポートフォリオを彩りましょう"
+      },
+      "speed": {
+        "title": "素早い作成",
+        "description": "わずか数分でプロフェッショナルなポートフォリオを完成させられます"
+      },
+      "responsive": {
+        "title": "レスポンシブデザイン",
+        "description": "あらゆるデバイスで完璧に表示されるレスポンシブポートフォリオ"
+      }
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "subtitle": "ポートフォリオへようこそ",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "loginButton": "ログイン",
+    "signup": "新規登録",
+    "home": "ホーム"
+  },
+  "signup": {
+    "title": "新規登録",
+    "subtitle": "ポートフォリオを始めましょう",
+    "basicInfo": "基本情報",
+    "additionalInfo": "追加情報（任意）",
+    "username": "ユーザー名",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "name": "お名前",
+    "phoneNumber": "電話番号",
+    "profileImage": "プロフィール画像URL",
+    "bio": "自己紹介を入力してください",
+    "signupButton": "新規登録",
+    "login": "ログイン",
+    "home": "ホーム"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "subtitle": "ポートフォリオを管理し、作成しましょう",
     "welcome": "ようこそ！",
-    "login": "ログイン"
+    "welcomeMessage": "ログインに成功しました。これでポートフォリオを作成できます。",
+    "features": {
+      "create": {
+        "title": "ポートフォリオ作成",
+        "description": "プロジェクトと経歴を追加して、あなただけのポートフォリオを作りましょう"
+      },
+      "customize": {
+        "title": "デザインカスタマイズ",
+        "description": "様々なテンプレートと色でポートフォリオを飾りましょう"
+      },
+      "stats": {
+        "title": "統計確認",
+        "description": "ポートフォリオの訪問者数と閲覧数を確認しましょう"
+      }
+    },
+    "logout": "ログアウト",
+    "home": "ホーム"
+  },
+  "common": {
+    "language": "言語"
+  }
 }
   

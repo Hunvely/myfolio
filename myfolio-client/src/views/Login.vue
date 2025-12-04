@@ -2,23 +2,23 @@
   <div class="login-page">
     <div class="login-container">
       <div class="login-header">
-        <h2>로그인</h2>
-        <p>포트폴리오에 오신 것을 환영합니다</p>
+        <h2>{{ t('login.title') }}</h2>
+        <p>{{ t('login.subtitle') }}</p>
       </div>
       
       <form @submit.prevent="submit">
         <div class="input-group">
-          <input v-model="email" type="email" placeholder="이메일" required />
+          <input v-model="email" type="email" :placeholder="t('login.email')" required />
         </div>
         <div class="input-group">
-          <input v-model="password" type="password" placeholder="비밀번호" required />
+          <input v-model="password" type="password" :placeholder="t('login.password')" required />
         </div>
         
-        <button type="submit" class="login-btn">로그인</button>
+        <button type="submit" class="login-btn">{{ t('login.loginButton') }}</button>
         
         <div class="footer-links">
-          <router-link to="/signup" class="link">회원가입</router-link>
-          <router-link to="/" class="link">홈으로</router-link>
+          <router-link to="/signup" class="link">{{ t('login.signup') }}</router-link>
+          <router-link to="/" class="link">{{ t('login.home') }}</router-link>
         </div>
       </form>
     </div>
@@ -28,7 +28,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const email = ref('')

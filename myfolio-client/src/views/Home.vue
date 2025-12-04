@@ -1,35 +1,38 @@
 <template>
   <div class="main">
     <div class="hero-section">
-      <h1 class="title">나만의 포트폴리오,<br />mypolio에서 시작하세요.</h1>
-      <p class="subtitle">디자이너, 개발자, 누구든지 쉽게 만드는 온라인 포트폴리오</p>
+      <h1 class="title" v-html="t('home.title')"></h1>
+      <p class="subtitle">{{ t('home.subtitle') }}</p>
       <div class="buttons">
-        <router-link to="/signup" class="btn">지금 시작하기</router-link>
-        <router-link to="/login" class="btn-outline">로그인</router-link>
+        <router-link to="/signup" class="btn">{{ t('home.startNow') }}</router-link>
+        <router-link to="/login" class="btn-outline">{{ t('home.login') }}</router-link>
       </div>
     </div>
     
     <div class="features-section">
       <div class="feature-card">
         <div class="feature-icon">🎨</div>
-        <h3>아름다운 디자인</h3>
-        <p>모던하고 세련된 템플릿으로 포트폴리오를 꾸며보세요</p>
+        <h3>{{ t('home.features.design.title') }}</h3>
+        <p>{{ t('home.features.design.description') }}</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <h3>빠른 제작</h3>
-        <p>몇 분만에 전문적인 포트폴리오를 완성할 수 있습니다</p>
+        <h3>{{ t('home.features.speed.title') }}</h3>
+        <p>{{ t('home.features.speed.description') }}</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📱</div>
-        <h3>반응형 디자인</h3>
-        <p>모든 기기에서 완벽하게 보이는 반응형 포트폴리오</p>
+        <h3>{{ t('home.features.responsive.title') }}</h3>
+        <p>{{ t('home.features.responsive.description') }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>
