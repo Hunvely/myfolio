@@ -1,11 +1,9 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
-import LanguageToggle from './components/LanguageToggle.vue'
 </script>
 
 <template>
   <div>
-    <LanguageToggle />
     <router-view />
   </div>
 </template>
