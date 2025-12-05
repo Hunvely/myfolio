@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard">
-    <!-- 상단 네비게이션 헤더 -->
+  <div class="portfolio-list-page">
+    <!-- 상단 네비게이션 헤더 (대시보드와 동일) -->
     <nav class="top-navbar">
       <div class="navbar-container">
         <!-- 좌측: 로고/서비스명 -->
@@ -93,56 +93,66 @@
       </div>
     </nav>
 
-    <!-- 알림 드롭다운 -->
-    <div v-if="showNotifications" class="notification-dropdown">
-      <div class="notification-header">
-        <h3>{{ t('dashboard.header.notifications') }}</h3>
-        <button @click="closeNotifications" class="close-btn">×</button>
-      </div>
-      <div class="notification-list">
-        <div v-if="notifications.length === 0" class="notification-empty">
-          {{ t('dashboard.header.noNotifications') }}
+    <!-- 페이지 컨텐츠 -->
+    <div class="portfolio-list-container">
+      <div class="page-header">
+        <div class="header-content">
+          <h1>{{ t('portfolio.list.title') }}</h1>
+          <p class="subtitle">{{ t('portfolio.list.subtitle') }}</p>
         </div>
-        <div v-for="notification in notifications" :key="notification.id" class="notification-item">
-          <span class="notification-icon">{{ notification.icon }}</span>
-          <div class="notification-content">
-            <p class="notification-title">{{ notification.title }}</p>
-            <p class="notification-time">{{ notification.time }}</p>
+        <router-link to="/portfolio/create" class="btn-create">
+          <span class="btn-icon">➕</span>
+          <span>{{ t('portfolio.list.createButton') }}</span>
+        </router-link>
+      </div>
+
+      <!-- 포트폴리오 리스트 -->
+      <div class="portfolio-grid">
+        <div v-if="portfolios.length === 0" class="empty-state">
+          <div class="empty-icon">📁</div>
+          <h3>{{ t('portfolio.list.emptyTitle') }}</h3>
+          <p>{{ t('portfolio.list.emptyDescription') }}</p>
+          <router-link to="/portfolio/create" class="btn-create-empty">
+            {{ t('portfolio.list.createButton') }}
+          </router-link>
+        </div>
+
+        <div 
+          v-for="portfolio in portfolios" 
+          :key="portfolio.id" 
+          class="portfolio-card"
+          @click="viewPortfolio(portfolio.id)"
+        >
+          <div class="portfolio-thumbnail">
+            <img v-if="portfolio.thumbnail" :src="portfolio.thumbnail" :alt="portfolio.title" />
+            <div v-else class="thumbnail-placeholder">
+              <span class="placeholder-icon">📄</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3 class="portfolio-title">{{ portfolio.title || t('portfolio.list.untitled') }}</h3>
+            <p class="portfolio-description">{{ portfolio.description || t('portfolio.list.noDescription') }}</p>
+            <div class="portfolio-meta">
+              <span class="meta-item">
+                <span class="meta-icon">📅</span>
+                <span>{{ formatDate(portfolio.updatedAt) }}</span>
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">👁️</span>
+                <span>{{ portfolio.views || 0 }} {{ t('portfolio.list.views') }}</span>
+              </span>
+            </div>
+          </div>
+          <div class="portfolio-actions">
+            <button @click.stop="editPortfolio(portfolio.id)" class="action-btn edit-btn">
+              {{ t('portfolio.list.edit') }}
+            </button>
+            <button @click.stop="deletePortfolio(portfolio.id)" class="action-btn delete-btn">
+              {{ t('portfolio.list.delete') }}
+            </button>
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="dashboard-content">
-      <div class="welcome-section">
-        <div class="welcome-card">
-          <div class="welcome-icon">🎉</div>
-          <h3>{{ t('dashboard.welcome') }}</h3>
-        </div>
-      </div>
-      
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">📝</div>
-          <h4>{{ t('dashboard.features.create.title') }}</h4>
-          <p>{{ t('dashboard.features.create.description') }}</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🎨</div>
-          <h4>{{ t('dashboard.features.customize.title') }}</h4>
-          <p>{{ t('dashboard.features.customize.description') }}</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📊</div>
-          <h4>{{ t('dashboard.features.stats.title') }}</h4>
-          <p>{{ t('dashboard.features.stats.description') }}</p>
-        </div>
-      </div>
-      
-      <!-- <div class="action-buttons">
-        <router-link to="/dashboard/portfolios" class="btn-primary">{{ t('dashboard.viewPortfolios') }}</router-link>
-        <router-link to="/" class="btn-link">{{ t('dashboard.home') }}</router-link>
-      </div> -->
     </div>
   </div>
 </template>
@@ -155,7 +165,7 @@ import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n()
 const router = useRouter()
 
-// 사용자 정보 (임시 - 나중에 Store에서 가져올 예정)
+// 사용자 정보 (임시)
 const userName = ref('지훈')
 const userInitial = computed(() => userName.value.charAt(0))
 
@@ -195,23 +205,6 @@ const showUserMenu = ref(false)
 const showNotifications = ref(false)
 const notificationCount = ref(2)
 
-// 알림 데이터 (임시)
-const notifications = ref([
-  {
-    id: 1,
-    icon: '✅',
-    title: '포트폴리오가 성공적으로 발행되었습니다',
-    time: '5분 전'
-  },
-  {
-    id: 2,
-    icon: '📸',
-    title: '이미지 업로드가 완료되었습니다',
-    time: '1시간 전'
-  }
-])
-
-// 메뉴 토글
 const toggleUserMenu = () => {
   showUserMenu.value = !showUserMenu.value
   if (showUserMenu.value) {
@@ -230,8 +223,37 @@ const toggleNotifications = () => {
   }
 }
 
-const closeNotifications = () => {
-  showNotifications.value = false
+// 포트폴리오 데이터 (임시 - 나중에 API로 가져올 예정)
+const portfolios = ref([
+  // 예시 데이터가 없으면 빈 배열
+])
+
+// 포트폴리오 관련 함수
+const viewPortfolio = (id) => {
+  // 포트폴리오 상세 페이지로 이동
+  router.push(`/portfolio/${id}`)
+}
+
+const editPortfolio = (id) => {
+  // 포트폴리오 편집 페이지로 이동
+  router.push(`/portfolio/${id}/edit`)
+}
+
+const deletePortfolio = (id) => {
+  if (confirm(t('portfolio.list.deleteConfirm'))) {
+    // 포트폴리오 삭제 API 호출
+    console.log('Delete portfolio:', id)
+  }
+}
+
+const formatDate = (date) => {
+  if (!date) return t('portfolio.list.noDate')
+  return new Date(date).toLocaleDateString()
+}
+
+const handleLogout = () => {
+  closeUserMenu()
+  router.push('/')
 }
 
 // 외부 클릭 시 메뉴 닫기
@@ -254,27 +276,24 @@ onMounted(() => {
     currentLocale.value = savedLanguage
     locale.value = savedLanguage
   }
+  
+  // 포트폴리오 목록 가져오기 (API 호출)
+  // loadPortfolios()
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
-
-const handleLogout = () => {
-  closeUserMenu()
-  router.push('/')
-}
 </script>
 
 <style scoped>
-.dashboard {
+.portfolio-list-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  transition: background 0.3s ease;
-  padding-top: 70px; /* 네비게이션 바 높이만큼 여백 */
+  background: linear-gradient(135deg, #f9f9fb 0%, #ffffff 100%);
+  padding-top: 70px;
 }
 
-/* 상단 네비게이션 바 */
+/* 네비게이션 바 스타일 (대시보드와 동일) */
 .top-navbar {
   position: fixed;
   top: 0;
@@ -296,7 +315,6 @@ const handleLogout = () => {
   height: 70px;
 }
 
-/* 좌측: 로고 */
 .navbar-left {
   flex: 0 0 auto;
 }
@@ -318,7 +336,6 @@ const handleLogout = () => {
   color: #000;
 }
 
-/* 중앙: 메인 메뉴 */
 .navbar-center {
   flex: 1;
   display: flex;
@@ -336,7 +353,6 @@ const handleLogout = () => {
   color: #333;
   font-weight: 500;
   transition: all 0.3s ease;
-  position: relative;
 }
 
 .nav-item:hover {
@@ -357,7 +373,6 @@ const handleLogout = () => {
   font-size: 0.95rem;
 }
 
-/* 우측: 유저 메뉴 */
 .navbar-right {
   flex: 0 0 auto;
   display: flex;
@@ -365,7 +380,36 @@ const handleLogout = () => {
   gap: 1rem;
 }
 
-/* 언어 선택 */
+.nav-icon-button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-icon-button:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
 .language-selector {
   position: relative;
   display: flex;
@@ -401,7 +445,6 @@ const handleLogout = () => {
   transform: rotate(180deg);
 }
 
-/* 언어 드롭다운 메뉴 */
 .language-menu-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -421,7 +464,6 @@ const handleLogout = () => {
   padding: 0.75rem 1.25rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  position: relative;
 }
 
 .language-option:hover {
@@ -451,37 +493,6 @@ const handleLogout = () => {
   font-size: 1rem;
 }
 
-.nav-icon-button {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.nav-icon-button:hover {
-  background-color: #f5f5f5;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #ff4444;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.2rem 0.4rem;
-  border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
-}
-
-/* 유저 메뉴 */
 .user-menu {
   position: relative;
   display: flex;
@@ -526,7 +537,6 @@ const handleLogout = () => {
   transform: rotate(180deg);
 }
 
-/* 유저 메뉴 드롭다운 */
 .user-menu-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -575,279 +585,227 @@ const handleLogout = () => {
   margin: 0.5rem 0;
 }
 
-/* 알림 드롭다운 */
-.notification-dropdown {
-  position: fixed;
-  top: 70px;
-  right: 2rem;
-  width: 360px;
-  max-height: 500px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  z-index: 1001;
-  display: flex;
-  flex-direction: column;
-}
-
-.notification-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem;
-  border-bottom: 1px solid #e1e5e9;
-}
-
-.notification-header h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #000;
-  margin: 0;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #666;
-  cursor: pointer;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.close-btn:hover {
-  background-color: #f5f5f5;
-}
-
-.notification-list {
-  overflow-y: auto;
-  max-height: 400px;
-}
-
-.notification-empty {
-  padding: 3rem 1.25rem;
-  text-align: center;
-  color: #999;
-  font-size: 0.9rem;
-}
-
-.notification-item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #f5f5f5;
-  transition: background-color 0.2s ease;
-  cursor: pointer;
-}
-
-.notification-item:hover {
-  background-color: #f9f9f9;
-}
-
-.notification-item:last-child {
-  border-bottom: none;
-}
-
-.notification-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.notification-content {
-  flex: 1;
-}
-
-.notification-title {
-  font-size: 0.9rem;
-  color: #333;
-  margin: 0 0 0.25rem 0;
-  line-height: 1.4;
-}
-
-.notification-time {
-  font-size: 0.8rem;
-  color: #999;
-  margin: 0;
-}
-
-.dashboard-header {
-  background: var(--bg-secondary);
-  padding: 3rem 2rem;
-  box-shadow: 0 2px 10px var(--shadow-light);
-  margin-bottom: 3rem;
-  transition: all 0.3s ease;
-}
-
-.header-content {
+/* 페이지 컨텐츠 */
+.portfolio-list-container {
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
+  padding: 3rem 2rem;
 }
 
-.dashboard-header h1 {
-  font-size: 3rem;
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  transition: color 0.3s ease;
+  color: #000;
+  margin-bottom: 0.5rem;
 }
 
 .subtitle {
-  font-size: 1.3rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-  transition: color 0.3s ease;
-}
-
-.dashboard-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem 4rem;
-}
-
-.welcome-section {
-  margin-bottom: 4rem;
-}
-
-.welcome-card {
-  background: var(--bg-secondary);
-  padding: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px var(--shadow-light);
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-  transition: all 0.3s ease;
-}
-
-.welcome-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-}
-
-.welcome-card h3 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  transition: color 0.3s ease;
-}
-
-.welcome-card p {
-  color: var(--text-secondary);
-  line-height: 1.6;
   font-size: 1.1rem;
-  transition: color 0.3s ease;
+  color: #666;
 }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.feature-card {
-  background: var(--bg-secondary);
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 5px 20px var(--shadow-light);
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px var(--shadow-medium);
-}
-
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-}
-
-.feature-card h4 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  transition: color 0.3s ease;
-}
-
-.feature-card p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.action-buttons {
+.btn-create {
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
+  align-items: center;
+  gap: 0.5rem;
   padding: 1rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
   background-color: #000;
   color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
   font-weight: 600;
-  min-width: 180px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary:hover {
+.btn-create:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-.btn-outline,
-.btn-link {
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+/* 포트폴리오 그리드 */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.btn-create-empty {
+  display: inline-block;
   padding: 1rem 2rem;
-  font-size: 1.1rem;
+  background-color: #000;
+  color: #fff;
   border-radius: 12px;
   text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-create-empty:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 포트폴리오 카드 */
+.portfolio-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 2px solid var(--text-primary);
-  background-color: transparent;
-  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-thumbnail {
+  width: 100%;
+  height: 200px;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.portfolio-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.portfolio-info {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.portfolio-title {
+  font-size: 1.3rem;
   font-weight: 600;
-  min-width: 140px;
+  color: #000;
+  margin-bottom: 0.5rem;
 }
 
-.btn-link {
-  display: inline-block;
+.portfolio-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.btn-outline:hover,
-.btn-link:hover {
-  background-color: var(--text-primary);
-  color: var(--bg-secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--shadow-heavy);
+.portfolio-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #999;
 }
 
-button {
-  font-family: inherit;
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.meta-icon {
+  font-size: 0.9rem;
+}
+
+.portfolio-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.edit-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.delete-btn {
+  background-color: #ffe5e5;
+  color: #ff4444;
+}
+
+.delete-btn:hover {
+  background-color: #ffcccc;
 }
 
 @media (max-width: 768px) {
-  .dashboard {
+  .portfolio-list-page {
     padding-top: 60px;
   }
 
@@ -860,20 +818,12 @@ button {
     font-size: 1.2rem;
   }
 
-  .navbar-center {
-    gap: 0.25rem;
-  }
-
-  .nav-item {
-    padding: 0.5rem 0.75rem;
-  }
-
   .nav-text {
-    display: none; /* 모바일에서는 아이콘만 표시 */
+    display: none;
   }
 
   .user-name {
-    display: none; /* 모바일에서는 아바타만 표시 */
+    display: none;
   }
 
   .dropdown-arrow {
@@ -881,50 +831,35 @@ button {
   }
 
   .language-text {
-    display: none; /* 모바일에서는 아이콘만 표시 */
+    display: none;
   }
 
   .language-selector {
     padding: 0.5rem;
   }
 
-  .notification-dropdown {
-    right: 1rem;
-    left: 1rem;
-    width: auto;
-  }
-
-  .dashboard-header {
+  .portfolio-list-container {
     padding: 2rem 1rem;
   }
-  
-  .dashboard-header h1 {
-    font-size: 2.2rem;
-  }
-  
-  .dashboard-content {
-    padding: 0 1rem 3rem;
-  }
-  
-  .welcome-card {
-    padding: 2rem;
-  }
-  
-  .features-grid {
-    grid-template-columns: 1fr;
+
+  .page-header {
+    flex-direction: column;
     gap: 1.5rem;
   }
-  
-  .action-buttons {
-    flex-direction: column;
-    align-items: center;
+
+  .header-content h1 {
+    font-size: 2rem;
   }
-  
-  .btn-outline,
-  .btn-link {
+
+  .btn-create {
     width: 100%;
-    max-width: 280px;
+    justify-content: center;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
+
 
