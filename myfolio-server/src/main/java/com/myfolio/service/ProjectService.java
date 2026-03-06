@@ -75,7 +75,7 @@ public class ProjectService {
         return toDto(updatedProject);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteProject(Long id) {
         if (!projectRepository.existsById(id)) {
             throw new IllegalArgumentException("project not found with id: " + id);
         }

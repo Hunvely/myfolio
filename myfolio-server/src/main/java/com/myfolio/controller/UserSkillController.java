@@ -27,7 +27,7 @@ public class UserSkillController {
     }
 
     @DeleteMapping("/{userId}/{skillId}")
-    public ResponseEntity<Void> deleteUserSkill(@RequestParam Long userId, @RequestParam Long skillId) {
+    public ResponseEntity<Void> deleteUserSkill(@PathVariable Long userId, @PathVariable Long skillId) {
         userSkillService.deleteUserSkill(userId, skillId);
         return ResponseEntity.noContent().build();
     }
