@@ -38,7 +38,7 @@ const { t } = useI18n()
 <style scoped>
 .main {
   min-height: 100vh;
-  background-color: #f9f9fb;
+  background-color: #fff;
   padding: 0;
 }
 
@@ -47,7 +47,7 @@ const { t } = useI18n()
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   text-align: center;
   padding: 2rem;
   background: linear-gradient(135deg, #f9f9fb 0%, #ffffff 100%);
