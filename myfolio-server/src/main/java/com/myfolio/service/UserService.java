@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -77,5 +78,14 @@ public class UserService {
             throw new IllegalArgumentException("user not found with id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public Map<String, Boolean> checkEmail(String email) {
+        if (email == null || email.isEmpty())
+            throw new IllegalArgumentException("email is empty");
+
+        boolean exists = userRepository.existsByEmail(email);
+
+        return Map.of("available", !exists);
     }
 }
