@@ -42,7 +42,13 @@
     "bio": "자기소개를 작성해주세요",
     "signupButton": "회원가입",
     "login": "로그인",
-    "home": "홈으로"
+    "home": "홈으로",
+    "emailInvalidFormat": "올바른 이메일 형식이 아닙니다",
+    "emailDuplicate": "이미 사용 중인 이메일입니다",
+    "emailCheckError": "이메일 확인 중 오류가 발생했습니다",
+    "emailAvailable": "사용 가능한 이메일입니다",
+    "emailChecking": "이메일 확인 중...",
+    "emailValidationRequired": "이메일 유효성 검사를 완료해주세요"
   },
   "dashboard": {
     "title": "대시보드",

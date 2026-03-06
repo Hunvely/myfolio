@@ -42,7 +42,13 @@
     "bio": "自己紹介を入力してください",
     "signupButton": "新規登録",
     "login": "ログイン",
-    "home": "ホーム"
+    "home": "ホーム",
+    "emailInvalidFormat": "メールアドレスの形式が正しくありません",
+    "emailDuplicate": "このメールアドレスは既に使用されています",
+    "emailCheckError": "メールアドレスの確認中にエラーが発生しました",
+    "emailAvailable": "このメールアドレスは使用可能です",
+    "emailChecking": "メールアドレスを確認中...",
+    "emailValidationRequired": "メールアドレスの確認を完了してください"
   },
   "dashboard": {
     "title": "ダッシュボード",

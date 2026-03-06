@@ -42,7 +42,13 @@
     "bio": "请填写自我介绍",
     "signupButton": "注册",
     "login": "登录",
-    "home": "首页"
+    "home": "首页",
+    "emailInvalidFormat": "邮箱格式不正确",
+    "emailDuplicate": "该邮箱已被使用",
+    "emailCheckError": "验证邮箱时发生错误",
+    "emailAvailable": "该邮箱可以使用",
+    "emailChecking": "正在验证邮箱...",
+    "emailValidationRequired": "请完成邮箱验证"
   },
   "dashboard": {
     "title": "仪表板",

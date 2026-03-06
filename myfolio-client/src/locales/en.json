@@ -42,7 +42,13 @@
     "bio": "Write your self-introduction",
     "signupButton": "Sign Up",
     "login": "Login",
-    "home": "Home"
+    "home": "Home",
+    "emailInvalidFormat": "Invalid email format",
+    "emailDuplicate": "This email is already in use",
+    "emailCheckError": "Error checking email",
+    "emailAvailable": "This email is available",
+    "emailChecking": "Checking email...",
+    "emailValidationRequired": "Please complete email validation"
   },
   "dashboard": {
     "title": "Dashboard",
